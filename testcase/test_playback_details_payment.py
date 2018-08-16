@@ -17,6 +17,7 @@ import time
     16323：需要购买会员类型
     16324：需要购买其它会员类型
     16331：未登录
+
 '''
 
 
@@ -42,6 +43,7 @@ class PlaybackDetailsPayment(unittest.TestCase):
         self.assertIn('price\":0.01', res.text, erro_info)
         self.assertIn('seeTime\":18000', res.text, erro_info)
         self.assertIn('state\":68', res.text, '\n' + erro_info)
+        self.assertIn('view\":4',res.text,'\n' + erro_info)
 
         # 打开直播详情页
     def test_b_role(self):
