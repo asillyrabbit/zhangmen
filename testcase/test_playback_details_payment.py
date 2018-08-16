@@ -5,8 +5,9 @@ import configure
 import comm_method
 import json
 import time
+
 '''
-打开直播详情页，对各接口返回进行检查
+打开直播回放详情页，对各接口返回进行检查
 特别是观看权限判断（/live/view/）
     16301：已付费
     16302：密码正确
@@ -19,7 +20,7 @@ import time
 '''
 
 
-class LiveDetailsPayment(unittest.TestCase):
+class PlaybackDetailsPayment(unittest.TestCase):
     @classmethod
     # 测试数据准备，指定群，指定直播,指定测试账号
     def setUpClass(self):
@@ -53,7 +54,7 @@ class LiveDetailsPayment(unittest.TestCase):
         erro_info = 'method:get' + '\n' + 'url:' + url + '\nerro_info' + res.text
         self.assertIn('code\":0', res.text, '\n' + erro_info)
 
-    def test_c_role(self):
+    def test_c_sf(self):
         api = '/api/sf/' + self.user_info['userId'] + '/belong?userId=' + self.user_info['userId'] + '&circleIds=' + self.circleId + '&sfType=1'
         url = configure.protocol + '://' + configure.zm_host + api
 
@@ -209,7 +210,7 @@ class LiveDetailsPayment(unittest.TestCase):
         self.assertIn('{\"message\":\"成功\"', res.text, '\n' + erro_info)
 
     def test_q_buriedPoint(self):
-        t = round(time.time(),)
+        t = round(time.time(), )
         time_param = t * 1000
         api = '/restful/biProxyService/data/buriedPoint'
         url = configure.protocol + '://' + configure.zm_host + api
@@ -225,23 +226,42 @@ class LiveDetailsPayment(unittest.TestCase):
 
         data = {
             'points': [{
-                'action': 'BROWSE',
-                'appOs': 'H5',
-                'appVersion': '',
-                'category': 'LIVE',
-                'categoryId': self.liveId,
-                'categoryType': 'DETAIL',
-                'locale':'zh-CN',
-                'pageRef':'',
-                'pageUrl':'http://m.zm518.cn/zhangmen/livenumber/share/entry/?sharerId=' + self.sharerId + '&circleId=' + self.circleId + '&liveId=' + self.liveId + '&from=singlemessage&isappinstalled=0',
-                'params': params,
-                'platform':'ZM',
-                'resolution':'414*736',
-                'title':'【auto】小胖子的付费直播',
-                'token':self.user_info['token'],
-                'time':time_param}],
-                't':t,
-                }
+                'action':
+                'BROWSE',
+                'appOs':
+                'H5',
+                'appVersion':
+                '',
+                'category':
+                'LIVE',
+                'categoryId':
+                self.liveId,
+                'categoryType':
+                'DETAIL',
+                'locale':
+                'zh-CN',
+                'pageRef':
+                '',
+                'pageUrl':
+                'http://m.zm518.cn/zhangmen/livenumber/share/entry/?sharerId='
+                + self.sharerId + '&circleId=' + self.circleId + '&liveId=' +
+                self.liveId + '&from=singlemessage&isappinstalled=0',
+                'params':
+                params,
+                'platform':
+                'ZM',
+                'resolution':
+                '414*736',
+                'title':
+                '【auto】小胖子的付费直播',
+                'token':
+                self.user_info['token'],
+                'time':
+                time_param
+            }],
+            't':
+            t,
+        }
 
         res = requests.post(url, json.dumps(data), headers=headers)
         res.encoding = 'utf-8'
